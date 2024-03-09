@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Homepage</title>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+    <% if (locals.blog) { %>
+         <h1 style="text-align: center;" > <%= blog.title %> </h1>
+          <img style="width:80%; height:300px; padding-left: 10%;" src="<%=blog.coverImageURL%>" alt=""> 
+         <div style=" margin:10% ;margin-top: 0%; padding: 20px; border: 0.5px solid black;" >
+        <h2 style="text-align: center;" >CONTENT</h2>
+         <p style="font-weight:500;"  ><%=blog.body %></p>
+            </div>
+         <div class="container mt-4">
+        <img src="<%=blog.createdBy.profileImageURL %>" width="100px" alt=""/><%= blog.createdBy.fullName  %>
+        </div>
+        <% } else { %> 
+            <div>
+                <p>Please log in to access the content.</p>
+            </div>
+       <% } %> 
+
+
+
+       <div class="container mt-3 ">
+
+        
+        <% if (locals.comments) { %>
+            <h1>Comments(<%= comments.length %>)</h1>
+            <ol>
+            <% comments.forEach((item) => { %>
+              <li> <%= item.content  %> </li>  
+            <% }); %>
+            </ol>
+        <% } %>
+   <% if(locals.user){ %>
+    <form action="/blog/comment/<%=blog._id  %>" method="post">
+        <input type="text" name="content" class="form-control" placeholder="Enter your Comment">   
+          <button class="btn btn-info" type=submit"">Add</button>
+   </form>
+   <% } %> 
+    
+    
+    
+    
+       </div>
+    <%- include('./partials/scripts') %>
+</body>
+</html>
